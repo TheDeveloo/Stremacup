@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="stremacupModel.Store" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="field">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="place_fk" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="category_fk" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="match">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="score1" Type="integer" />
+          <Property Name="score2" Type="integer" />
+          <Property Name="datetime" Type="datetime" />
+          <Property Name="team1_fk" Type="integer" Nullable="false" />
+          <Property Name="team2_fk" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="matchday">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="place">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="beginHour" Type="datetime" Nullable="false" />
+          <Property Name="endHour" Type="datetime" Nullable="false" />
+          <Property Name="matchday_fk" Type="integer" />
+        </EntityType>
+        <EntityType Name="team">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="group_fk" Type="integer" />
+        </EntityType>
+        <Association Name="FK_field_0_0">
+          <End Role="place" Type="Self.place" Multiplicity="1" />
+          <End Role="field" Type="Self.field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="place">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="field">
+              <PropertyRef Name="place_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_0_0">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="group" Type="Self.group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="group">
+              <PropertyRef Name="category_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_0_0">
+          <End Role="team" Type="Self.team" Multiplicity="1" />
+          <End Role="match" Type="Self.match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="match">
+              <PropertyRef Name="team2_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_1_0">
+          <End Role="team" Type="Self.team" Multiplicity="1" />
+          <End Role="match" Type="Self.match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="match">
+              <PropertyRef Name="team1_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_schedule_0_0">
+          <End Role="matchday" Type="Self.matchday" Multiplicity="0..1" />
+          <End Role="schedule" Type="Self.schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="matchday">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule">
+              <PropertyRef Name="matchday_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_team_0_0">
+          <End Role="group" Type="Self.group" Multiplicity="0..1" />
+          <End Role="team" Type="Self.team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="team">
+              <PropertyRef Name="group_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="stremacupModelStoreContainer">
+          <EntitySet Name="category" EntityType="Self.category" store:Type="Tables" />
+          <EntitySet Name="field" EntityType="Self.field" store:Type="Tables" />
+          <EntitySet Name="group" EntityType="Self.group" store:Type="Tables" />
+          <EntitySet Name="match" EntityType="Self.match" store:Type="Tables" />
+          <EntitySet Name="matchday" EntityType="Self.matchday" store:Type="Tables" />
+          <EntitySet Name="place" EntityType="Self.place" store:Type="Tables" />
+          <EntitySet Name="schedule" EntityType="Self.schedule" store:Type="Tables" />
+          <EntitySet Name="team" EntityType="Self.team" store:Type="Tables" />
+          <AssociationSet Name="FK_field_0_0" Association="Self.FK_field_0_0">
+            <End Role="place" EntitySet="place" />
+            <End Role="field" EntitySet="field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_0_0" Association="Self.FK_group_0_0">
+            <End Role="category" EntitySet="category" />
+            <End Role="group" EntitySet="group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_0_0" Association="Self.FK_match_0_0">
+            <End Role="team" EntitySet="team" />
+            <End Role="match" EntitySet="match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_1_0" Association="Self.FK_match_1_0">
+            <End Role="team" EntitySet="team" />
+            <End Role="match" EntitySet="match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_schedule_0_0" Association="Self.FK_schedule_0_0">
+            <End Role="matchday" EntitySet="matchday" />
+            <End Role="schedule" EntitySet="schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_team_0_0" Association="Self.FK_team_0_0">
+            <End Role="group" EntitySet="group" />
+            <End Role="team" EntitySet="team" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="stremacupModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="group" Relationship="Self.FK_group_0_0" FromRole="category" ToRole="group" />
+        </EntityType>
+        <EntityType Name="field">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="place_fk" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="place" Relationship="Self.FK_field_0_0" FromRole="field" ToRole="place" />
+        </EntityType>
+        <EntityType Name="group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_fk" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="category" Relationship="Self.FK_group_0_0" FromRole="group" ToRole="category" />
+          <NavigationProperty Name="team" Relationship="Self.FK_team_0_0" FromRole="group" ToRole="team" />
+        </EntityType>
+        <EntityType Name="match">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="score1" Type="Int64" />
+          <Property Name="score2" Type="Int64" />
+          <Property Name="datetime" Type="DateTime" />
+          <Property Name="team1_fk" Type="Int64" Nullable="false" />
+          <Property Name="team2_fk" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="team" Relationship="Self.FK_match_0_0" FromRole="match" ToRole="team" />
+          <NavigationProperty Name="team1" Relationship="Self.FK_match_1_0" FromRole="match" ToRole="team" />
+        </EntityType>
+        <EntityType Name="matchday">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="schedule" Relationship="Self.FK_schedule_0_0" FromRole="matchday" ToRole="schedule" />
+        </EntityType>
+        <EntityType Name="place">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="field" Relationship="Self.FK_field_0_0" FromRole="place" ToRole="field" />
+        </EntityType>
+        <EntityType Name="schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="beginHour" Type="DateTime" Nullable="false" />
+          <Property Name="endHour" Type="DateTime" Nullable="false" />
+          <Property Name="matchday_fk" Type="Int64" />
+          <NavigationProperty Name="matchday" Relationship="Self.FK_schedule_0_0" FromRole="schedule" ToRole="matchday" />
+        </EntityType>
+        <EntityType Name="team">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="group_fk" Type="Int64" />
+          <NavigationProperty Name="group" Relationship="Self.FK_team_0_0" FromRole="team" ToRole="group" />
+          <NavigationProperty Name="match" Relationship="Self.FK_match_0_0" FromRole="team" ToRole="match" />
+          <NavigationProperty Name="match1" Relationship="Self.FK_match_1_0" FromRole="team" ToRole="match" />
+        </EntityType>
+        <Association Name="FK_group_0_0">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="group" Type="Self.group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="group">
+              <PropertyRef Name="category_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_field_0_0">
+          <End Role="place" Type="Self.place" Multiplicity="1" />
+          <End Role="field" Type="Self.field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="place">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="field">
+              <PropertyRef Name="place_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_team_0_0">
+          <End Role="group" Type="Self.group" Multiplicity="0..1" />
+          <End Role="team" Type="Self.team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="team">
+              <PropertyRef Name="group_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_0_0">
+          <End Role="team" Type="Self.team" Multiplicity="1" />
+          <End Role="match" Type="Self.match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="match">
+              <PropertyRef Name="team2_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_1_0">
+          <End Role="team" Type="Self.team" Multiplicity="1" />
+          <End Role="match" Type="Self.match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="match">
+              <PropertyRef Name="team1_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_schedule_0_0">
+          <End Role="matchday" Type="Self.matchday" Multiplicity="0..1" />
+          <End Role="schedule" Type="Self.schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="matchday">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule">
+              <PropertyRef Name="matchday_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="stremacupEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="category" EntityType="Self.category" />
+          <EntitySet Name="field" EntityType="Self.field" />
+          <EntitySet Name="group" EntityType="Self.group" />
+          <EntitySet Name="match" EntityType="Self.match" />
+          <EntitySet Name="matchday" EntityType="Self.matchday" />
+          <EntitySet Name="place" EntityType="Self.place" />
+          <EntitySet Name="schedule" EntityType="Self.schedule" />
+          <EntitySet Name="team" EntityType="Self.team" />
+          <AssociationSet Name="FK_group_0_0" Association="Self.FK_group_0_0">
+            <End Role="category" EntitySet="category" />
+            <End Role="group" EntitySet="group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_field_0_0" Association="Self.FK_field_0_0">
+            <End Role="place" EntitySet="place" />
+            <End Role="field" EntitySet="field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_team_0_0" Association="Self.FK_team_0_0">
+            <End Role="group" EntitySet="group" />
+            <End Role="team" EntitySet="team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_0_0" Association="Self.FK_match_0_0">
+            <End Role="team" EntitySet="team" />
+            <End Role="match" EntitySet="match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_1_0" Association="Self.FK_match_1_0">
+            <End Role="team" EntitySet="team" />
+            <End Role="match" EntitySet="match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_schedule_0_0" Association="Self.FK_schedule_0_0">
+            <End Role="matchday" EntitySet="matchday" />
+            <End Role="schedule" EntitySet="schedule" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="stremacupModelStoreContainer" CdmEntityContainer="stremacupEntities">
+          <EntitySetMapping Name="category">
+            <EntityTypeMapping TypeName="stremacupModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="field">
+            <EntityTypeMapping TypeName="stremacupModel.field">
+              <MappingFragment StoreEntitySet="field">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="place_fk" ColumnName="place_fk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="group">
+            <EntityTypeMapping TypeName="stremacupModel.group">
+              <MappingFragment StoreEntitySet="group">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="category_fk" ColumnName="category_fk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="match">
+            <EntityTypeMapping TypeName="stremacupModel.match">
+              <MappingFragment StoreEntitySet="match">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="score1" ColumnName="score1" />
+                <ScalarProperty Name="score2" ColumnName="score2" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="team1_fk" ColumnName="team1_fk" />
+                <ScalarProperty Name="team2_fk" ColumnName="team2_fk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="matchday">
+            <EntityTypeMapping TypeName="stremacupModel.matchday">
+              <MappingFragment StoreEntitySet="matchday">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="place">
+            <EntityTypeMapping TypeName="stremacupModel.place">
+              <MappingFragment StoreEntitySet="place">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="schedule">
+            <EntityTypeMapping TypeName="stremacupModel.schedule">
+              <MappingFragment StoreEntitySet="schedule">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="beginHour" ColumnName="beginHour" />
+                <ScalarProperty Name="endHour" ColumnName="endHour" />
+                <ScalarProperty Name="matchday_fk" ColumnName="matchday_fk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="team">
+            <EntityTypeMapping TypeName="stremacupModel.team">
+              <MappingFragment StoreEntitySet="team">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="group_fk" ColumnName="group_fk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
