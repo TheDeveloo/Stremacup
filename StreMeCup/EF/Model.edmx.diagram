@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="41bb4a16a6bf44d7b61f4c38696f0639" Name="Diagram1">
+      <Diagram DiagramId="a7b1ac55f3084b7ba3514b2fe1b6c017" Name="Diagramme1">
         <EntityTypeShape EntityType="stremacupModel.category" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="stremacupModel.field" Width="1.5" PointX="8" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="stremacupModel.group" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />

@@ -14,7 +14,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button HorizontalAlignment="Center">Récupérer les données</Button>
+                    <Button HorizontalAlignment="Center" Click="Button_Click">Récupérer les données</Button>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Configuration du tournoi">
