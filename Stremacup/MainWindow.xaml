@@ -1,7 +1,7 @@
-﻿<Window x:Class="Stremacup.MainWindow"
+<Window x:Name="mainWindow" x:Class="Stremacup.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow">
+        Title="StreMaCup" Loaded="mainWindow_Loaded" WindowStartupLocation="CenterScreen" Height="867.344" WindowState="Maximized">
     <Grid>
         <TabControl>
             <TabItem Header="Récupération des équipes">
@@ -14,8 +14,8 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button HorizontalAlignment="Center" Click="Button_Click">Récupérer les données</Button>
-                    <TextBlock x:Name="recuperationStatus" />
+                        <Button x:Name="btnStart" HorizontalAlignment="Center" Click="btnStart_Click">Récupérer les données</Button>
+                        <TextBlock x:Name="recuperationStatus" />
                 </StackPanel>
             </TabItem>
             <TabItem Header="Configuration du tournoi">
@@ -24,27 +24,27 @@
                         <GroupBox Header="Jours">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel>
-                                    <ListBox MinHeight="200" Margin="20" MinWidth="300">
+                                    <ListBox x:Name="lbxDays" MinHeight="200" Margin="20" MinWidth="300" SelectionChanged="lbxDays_SelectionChanged">
 
                                     </ListBox>
-                                    <Button Margin="20,0,20,10">Ajouter un jour</Button>
-                                    <DatePicker Margin="20,0,20,10"></DatePicker>
+                                    <Button x:Name="btnAddDay" Margin="20,0,20,10" Click="btnAddDay_Click">Ajouter un jour</Button>
+                                    <DatePicker x:Name="datePicker" Margin="20,0,20,10"></DatePicker>
                                 </StackPanel>
                                 <StackPanel>
-                                    <ListBox MinHeight="200" Margin="20" MinWidth="300">
+                                    <ListBox x:Name="lbxSchedules" MinHeight="200" Margin="20" MinWidth="300" SelectionChanged="lbxSchedules_SelectionChanged">
 
                                     </ListBox>
-                                    <Button Margin="20,0,20,10">Ajouter une plage horaire</Button>
+                                    <Button x:Name="btnAddSchedule" Margin="20,0,20,10" Click="btnAddSchedule_Click">Ajouter une plage horaire</Button>
                                     <StackPanel Orientation="Horizontal" Margin="20,0,20,10">
                                         <Label>Début :</Label>
-                                        <TextBox MinWidth="20"></TextBox>
+                                        <TextBox x:Name="tbxHStart" MinWidth="20"></TextBox>
                                         <Label>h</Label>
-                                        <TextBox MinWidth="20"></TextBox>
+                                        <TextBox x:Name="tbxMStart" MinWidth="20"></TextBox>
                                         <Label Margin="0,0,5,0">m</Label>
                                         <Label Margin="5,0,0,0">Fin :</Label>
-                                        <TextBox MinWidth="20"></TextBox>
+                                        <TextBox x:Name="tbxHEnd" MinWidth="20"></TextBox>
                                         <Label>h</Label>
-                                        <TextBox MinWidth="20"></TextBox>
+                                        <TextBox x:Name="tbxMEnd" MinWidth="20"></TextBox>
                                         <Label>m</Label>
                                     </StackPanel>
                                 </StackPanel>
@@ -52,15 +52,15 @@
                         </GroupBox>
                         <GroupBox Header="Lieux">
                             <StackPanel>
-                                <ListBox MinHeight="200" Margin="20" MinWidth="300">
+                                <ListBox x:Name="lbxPlaces" MinHeight="200" Margin="20" MinWidth="300">
 
                                 </ListBox>
                                 <StackPanel Orientation="Horizontal" Margin="20,10,20,10">
-                                    <Button Margin="0,0,20,0">Ajouter un lieu</Button>
+                                    <Button x:Name="btnAddPlace" Margin="0,0,20,0" Click="btnAddPlace_Click">Ajouter un lieu</Button>
                                     <Label>Nom :</Label>
-                                    <TextBox MinWidth="100"></TextBox>
+                                    <TextBox x:Name="tbxPlaceName" MinWidth="100"></TextBox>
                                     <Label>Nombre de terrains :</Label>
-                                    <TextBox MinWidth="20"></TextBox>
+                                    <TextBox x:Name="tbxNumberOfFields" MinWidth="20"></TextBox>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
