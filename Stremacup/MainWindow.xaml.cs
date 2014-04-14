@@ -1,7 +1,9 @@
-﻿using Stremacup.EF;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,8 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
-namespace StreMeCup
+namespace Stremacup
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
@@ -28,12 +31,13 @@ namespace StreMeCup
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var em = new stremacupEntities();
-            team myteam = new team();
-            myteam.name = "Blaaaaaa";
+            API api = new API(this);
+            api.getTeamsHTTP();
+        }
 
-            em.team.Add(myteam);
-            em.SaveChanges();
+        public void setRecuperationInfos(string infos)
+        {
+            recuperationStatus.Text = infos;
         }
     }
 }

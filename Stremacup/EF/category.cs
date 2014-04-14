@@ -17,11 +17,13 @@ namespace Stremacup.EF
         public category()
         {
             this.group = new HashSet<group>();
+            this.team = new HashSet<team>();
         }
     
         public long id { get; set; }
         public string name { get; set; }
     
         public virtual ICollection<group> group { get; set; }
+        public virtual ICollection<team> team { get; set; }
     }
 }

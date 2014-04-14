@@ -23,9 +23,11 @@ namespace Stremacup.EF
         public long id { get; set; }
         public string name { get; set; }
         public Nullable<long> group_fk { get; set; }
+        public long cat_fk { get; set; }
     
         public virtual group group { get; set; }
         public virtual ICollection<match> match { get; set; }
         public virtual ICollection<match> match1 { get; set; }
+        public virtual category category { get; set; }
     }
 }

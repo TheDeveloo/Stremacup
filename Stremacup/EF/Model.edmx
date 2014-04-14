@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="stremacupModel.Store" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="stremacupModel.Store" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="id" />
@@ -67,8 +67,9 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="group_fk" Type="integer" />
+          <Property Name="cat_fk" Type="integer" Nullable="false" />
         </EntityType>
         <Association Name="FK_field_0_0">
           <End Role="place" Type="Self.place" Multiplicity="1" />
@@ -131,6 +132,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_team_0_0">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="team" Type="Self.team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="team">
+              <PropertyRef Name="cat_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_team_1_0">
           <End Role="group" Type="Self.group" Multiplicity="0..1" />
           <End Role="team" Type="Self.team" Multiplicity="*" />
           <ReferentialConstraint>
@@ -172,12 +185,15 @@
             <End Role="schedule" EntitySet="schedule" />
           </AssociationSet>
           <AssociationSet Name="FK_team_0_0" Association="Self.FK_team_0_0">
+            <End Role="category" EntitySet="category" />
+            <End Role="team" EntitySet="team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_team_1_0" Association="Self.FK_team_1_0">
             <End Role="group" EntitySet="group" />
             <End Role="team" EntitySet="team" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="stremacupModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -188,6 +204,7 @@
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="group" Relationship="Self.FK_group_0_0" FromRole="category" ToRole="group" />
+          <NavigationProperty Name="team" Relationship="stremacupModel.FK_team_0_01" FromRole="category" ToRole="team" />
         </EntityType>
         <EntityType Name="field">
           <Key>
@@ -252,11 +269,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="group_fk" Type="Int64" />
           <NavigationProperty Name="group" Relationship="Self.FK_team_0_0" FromRole="team" ToRole="group" />
           <NavigationProperty Name="match" Relationship="Self.FK_match_0_0" FromRole="team" ToRole="match" />
           <NavigationProperty Name="match1" Relationship="Self.FK_match_1_0" FromRole="team" ToRole="match" />
+          <Property Name="cat_fk" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="category" Relationship="stremacupModel.FK_team_0_01" FromRole="team" ToRole="category" />
         </EntityType>
         <Association Name="FK_group_0_0">
           <End Role="category" Type="Self.category" Multiplicity="1" />
@@ -363,7 +382,23 @@
             <End Role="matchday" EntitySet="matchday" />
             <End Role="schedule" EntitySet="schedule" />
           </AssociationSet>
+          <AssociationSet Name="FK_team_0_01" Association="stremacupModel.FK_team_0_01">
+            <End Role="category" EntitySet="category" />
+            <End Role="team" EntitySet="team" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_team_0_01">
+          <End Type="stremacupModel.category" Role="category" Multiplicity="1" />
+          <End Type="stremacupModel.team" Role="team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="team">
+              <PropertyRef Name="cat_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -437,6 +472,7 @@
           <EntitySetMapping Name="team">
             <EntityTypeMapping TypeName="stremacupModel.team">
               <MappingFragment StoreEntitySet="team">
+                <ScalarProperty Name="cat_fk" ColumnName="cat_fk" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="group_fk" ColumnName="group_fk" />
