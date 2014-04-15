@@ -7,15 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Stremacup
 {
@@ -111,7 +103,7 @@ namespace Stremacup
                 endHour = Convert.ToInt32(this.tbxHEnd.Text);
                 endMinute = Convert.ToInt32(this.tbxMEnd.Text);
             }
-            catch (FormatException ex) { }
+            catch (FormatException) { }
 
             if (selectedMatchday != null && startHour != 0 && startMinute != 0 && endHour != 0 && endMinute != 0)
             {
@@ -142,7 +134,7 @@ namespace Stremacup
             {
                 numberOfFields = Convert.ToInt32(this.tbxNumberOfFields.Text);
             }
-            catch (FormatException ex) { }
+            catch (FormatException) { }
 
             if (placeName != "" && numberOfFields != 0)
             {
