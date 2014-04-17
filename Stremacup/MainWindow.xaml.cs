@@ -8,6 +8,92 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+
+// round robin
+    //public void generateMatchdays(Championship championship) {
+    //    List<MatchDay> matchdayList = new ArrayList<>();
+    //    List<Team> teamList = mainController.getChampionshipTeams(championship);
+    //    String message = "";
+
+    //    if (teamList.size() % 2 == 0) {
+    //        work(matchdayList, teamList, championship);
+    //    } else {
+    //        teamList.add(new Team(-1, message, null, null));
+    //        message = work(matchdayList, teamList, championship);
+    //    }
+        
+    //    FacesMessage msg = new FacesMessage(message, "INFO MSG");
+    //    msg.setSeverity(FacesMessage.SEVERITY_INFO);
+    //    FacesContext.getCurrentInstance().addMessage(null, msg);
+    //}
+
+    //public String work(List<MatchDay> matchdayList, List<Team> teamList, Championship championship) {
+    //    String message = " | ";
+    //    List<Team> firstList = new ArrayList<>();
+    //    List<Team> reverseList = new ArrayList<>();
+
+    //    for (int k = 1; k < teamList.size(); k++) {
+    //        if (k < teamList.size() / 2) {
+    //            firstList.add(teamList.get(k));
+    //        } else {
+    //            reverseList.add(teamList.get(k));
+    //        }
+    //    }
+
+    //    for (int i = 0; i < teamList.size() - 1; i++) {
+    //        MatchDay matchDay = new MatchDay();
+    //        matchDay.setChampionship(championship);
+    //        List<Match> matches = new ArrayList<>();
+
+    //        Collections.rotate(firstList, 1);
+    //        Collections.rotate(reverseList, -1);
+    //        Team temp = firstList.get(0);
+    //        firstList.set(0, reverseList.get(reverseList.size() - 1));
+    //        reverseList.set(reverseList.size() - 1, temp);
+
+    //        if (teamList.get(0).getId() != -1 && reverseList.get(0).getId() != -1) {
+    //            Match match1 = new Match();
+    //            match1.setTeam1(teamList.get(0));
+    //            match1.setTeam2(reverseList.get(0));
+    //            match1.setMatchDay(matchDay);
+    //            matches.add(match1);
+    //        }            
+
+    //        if (!("".equals(teamList.get(0).getName())) && !("".equals(reverseList.get(0).getName()))) {
+    //            message += teamList.get(0).getName() + " vs ";
+    //            message += reverseList.get(0).getName();
+    //            message += " | ";
+    //        }
+
+    //        for (int j = 0; j < teamList.size() / 2 - 1; j++) {
+    //            if (firstList.get(j).getId() == -1 || reverseList.get(j + 1).getId() == -1) {
+    //                continue;
+    //            }
+    //            Match match = new Match();
+    //            match.setTeam1(firstList.get(j));
+    //            match.setTeam2(reverseList.get(j + 1));
+    //            match.setMatchDay(matchDay);
+
+    //            // match.setMatchDay(matchday);
+    //            matches.add(match);
+                
+    //            if (!("".equals(firstList.get(j).getName())) && !("".equals(reverseList.get(j + 1).getName()))) {
+    //                message += firstList.get(j).getName() + " vs ";
+    //                message += reverseList.get(j + 1).getName();
+    //                message += " | ";
+    //            }
+                
+    //        }
+
+    //        // save the matchday
+    //        matchDay.setMatches(matches);
+    //        mainController.persistMatchday(matchDay);
+    //    }
+        
+    //    return message;
+    //}
 
 namespace Stremacup
 {
@@ -161,6 +247,35 @@ namespace Stremacup
             {
                 MessageBox.Show("Place name empty or number of fields missed!", "Error");
             }
+        }
+
+        private void btnGeneratePDF_Click(object sender, RoutedEventArgs e)
+        {
+            var doc1 = new Document();
+            PdfWriter.GetInstance(doc1, new FileStream("doc1.pdf", FileMode.Create));
+            doc1.Open();
+            for (int i = 0; i < 1; i++)
+            {
+                Paragraph paragraph = new Paragraph(50f, "My first PDF");
+                paragraph.SpacingAfter = 50f;
+                doc1.Add(paragraph);
+            }
+
+            PdfPTable table = new PdfPTable(3);
+            table.WidthPercentage = 100;
+            PdfPCell cell = new PdfPCell(new Phrase("Header spanning 3 columns"));
+            cell.Colspan = 3;
+            cell.HorizontalAlignment = 1;
+            table.AddCell(cell);
+            table.AddCell("Col 1 Row 1");
+            table.AddCell("Col 2 Row 1");
+            table.AddCell("Col 3 Row 1");
+            table.AddCell("Col 1 Row 2");
+            table.AddCell("Col 2 Row 2");
+            table.AddCell("Col 3 Row 2");
+            doc1.Add(table);
+
+            doc1.Close();
         }
     }
 }

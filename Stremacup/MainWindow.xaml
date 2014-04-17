@@ -86,7 +86,7 @@
                     <CheckBox IsChecked="True">Générer horaires par équipe</CheckBox>
                     <CheckBox IsChecked="True">Générer horaires par terrain</CheckBox>
                     <CheckBox IsChecked="True">Générer horaires par heure</CheckBox>
-                    <Button HorizontalAlignment="Left" Margin="0,20,0,0">Générer</Button>
+                    <Button x:Name="btnGeneratePDF" HorizontalAlignment="Left" Margin="0,20,0,0" Click="btnGeneratePDF_Click">Générer</Button>
                 </StackPanel>
             </TabItem>
         </TabControl>
