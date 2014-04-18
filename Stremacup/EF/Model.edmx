@@ -39,6 +39,8 @@
           <Property Name="team1_fk" Type="integer" Nullable="false" />
           <Property Name="team2_fk" Type="integer" Nullable="false" />
           <Property Name="field_fk" Type="integer" />
+          <Property Name="fair_play1" Type="integer" />
+          <Property Name="fair_play2" Type="integer" />
         </EntityType>
         <EntityType Name="matchday">
           <Key>
@@ -257,6 +259,8 @@
           <NavigationProperty Name="team1" Relationship="Self.FK_match_1_0" FromRole="match" ToRole="team" />
           <Property Name="field_fk" Type="Int64" />
           <NavigationProperty Name="field" Relationship="stremacupModel.FK_match_0_01" FromRole="match" ToRole="field" />
+          <Property Name="fair_play1" Type="Int64" />
+          <Property Name="fair_play2" Type="Int64" />
         </EntityType>
         <EntityType Name="matchday">
           <Key>
@@ -470,6 +474,8 @@
           <EntitySetMapping Name="match">
             <EntityTypeMapping TypeName="stremacupModel.match">
               <MappingFragment StoreEntitySet="match">
+                <ScalarProperty Name="fair_play2" ColumnName="fair_play2" />
+                <ScalarProperty Name="fair_play1" ColumnName="fair_play1" />
                 <ScalarProperty Name="field_fk" ColumnName="field_fk" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="score1" ColumnName="score1" />

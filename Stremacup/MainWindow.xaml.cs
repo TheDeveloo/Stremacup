@@ -116,7 +116,9 @@ namespace Stremacup
         public void setRecuperationInfos(string infos)
         {
             recuperationStatus.Text = infos;
+            matchsGrid.ItemsSource = em.match.ToList();
         }
+
 
         public void refreshTeamList()
         {
@@ -282,6 +284,16 @@ namespace Stremacup
                 // Team pdf
                 pdfGenerator.generateForTeams();
             */
+        }
+
+        private void refreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            matchsGrid.ItemsSource = em.match.ToList();
+        }
+
+        private void matchsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            em.SaveChanges();
         }
     }
 }
