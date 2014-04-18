@@ -64,12 +64,6 @@
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Groupes">
-                            <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-                                <Label>Nombre d'équipes par groupe :</Label>
-                                <TextBox MinWidth="20"></TextBox>
-                            </StackPanel>
-                        </GroupBox>
                         <GroupBox Header="Matchs">
                             <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                 <Label>Durée d'un match (avec pause) :</Label>
