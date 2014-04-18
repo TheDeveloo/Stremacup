@@ -149,6 +149,11 @@ namespace Stremacup
 
         private void lbxDays_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (lbxDays.SelectedIndex == -1)
+            {
+                return;
+            }
+
             matchday matchday = (matchday)this.lbxDays.SelectedItem;
 
             this.lbxSchedules.Items.Clear();
@@ -161,7 +166,60 @@ namespace Stremacup
 
         private void lbxSchedules_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // nothing to do
+        }
 
+        private void DeleteItemTime(object sender, RoutedEventArgs e)
+        {
+            if (lbxSchedules.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            schedule selectedSchedule = (schedule)lbxSchedules.SelectedItem;
+            em.schedule.Remove(selectedSchedule);
+            lbxSchedules.Items.RemoveAt(lbxSchedules.SelectedIndex);
+
+            em.SaveChanges();
+        }
+
+        private void DeleteItemDay(object sender, RoutedEventArgs e)
+        {
+            if (lbxDays.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            matchday selectedDay = (matchday)lbxDays.SelectedItem;
+            int index = lbxDays.SelectedIndex;
+
+            lbxSchedules.UnselectAll();
+            lbxDays.UnselectAll();
+
+            List<schedule> schedules = selectedDay.schedule.ToList();
+            foreach (schedule s in schedules)
+            {
+                em.schedule.Remove(s);
+            }
+            lbxSchedules.Items.Clear();
+
+            em.matchday.Remove(selectedDay);
+            lbxDays.Items.RemoveAt(index);
+
+            em.SaveChanges();
+        }
+
+        private void DeleteItemPlace(object sender, RoutedEventArgs e)
+        {
+            if (lbxPlaces.SelectedIndex == -1)
+            {
+                return;
+            }
+            place selectedPlace = (place) lbxPlaces.SelectedItem;
+            em.place.Remove(selectedPlace);
+            lbxPlaces.Items.RemoveAt(lbxPlaces.SelectedIndex);
+
+            em.SaveChanges();
         }
 
         private void btnAddDay_Click(object sender, RoutedEventArgs e)

@@ -25,14 +25,22 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel>
                                     <ListBox x:Name="lbxDays" MinHeight="200" Margin="20" MinWidth="300" SelectionChanged="lbxDays_SelectionChanged">
-
+                                        <ListBox.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Delete" Click="DeleteItemDay"></MenuItem>
+                                            </ContextMenu>
+                                        </ListBox.ContextMenu>
                                     </ListBox>
                                     <Button x:Name="btnAddDay" Margin="20,0,20,10" Click="btnAddDay_Click">Ajouter un jour</Button>
                                     <DatePicker x:Name="datePicker" Margin="20,0,20,10"></DatePicker>
                                 </StackPanel>
                                 <StackPanel>
                                     <ListBox x:Name="lbxSchedules" MinHeight="200" Margin="20" MinWidth="300" SelectionChanged="lbxSchedules_SelectionChanged">
-
+                                        <ListBox.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Delete" Click="DeleteItemTime"></MenuItem>
+                                            </ContextMenu>
+                                        </ListBox.ContextMenu>
                                     </ListBox>
                                     <Button x:Name="btnAddSchedule" Margin="20,0,20,10" Click="btnAddSchedule_Click">Ajouter une plage horaire</Button>
                                     <StackPanel Orientation="Horizontal" Margin="20,0,20,10">
@@ -53,7 +61,11 @@
                         <GroupBox Header="Lieux">
                             <StackPanel>
                                 <ListBox x:Name="lbxPlaces" MinHeight="200" Margin="20" MinWidth="300">
-
+                                    <ListBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Delete" Click="DeleteItemPlace"></MenuItem>
+                                        </ContextMenu>
+                                    </ListBox.ContextMenu>
                                 </ListBox>
                                 <StackPanel Orientation="Horizontal" Margin="20,10,20,10">
                                     <Button x:Name="btnAddPlace" Margin="0,0,20,0" Click="btnAddPlace_Click">Ajouter un lieu</Button>
