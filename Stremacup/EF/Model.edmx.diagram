@@ -20,6 +20,7 @@
         <AssociationConnector Association="stremacupModel.FK_match_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="stremacupModel.FK_schedule_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="stremacupModel.FK_team_0_01" />
+        <AssociationConnector Association="stremacupModel.FK_match_0_01" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -14,10 +14,16 @@ namespace Stremacup.EF
     
     public partial class field
     {
+        public field()
+        {
+            this.match = new HashSet<match>();
+        }
+    
         public long id { get; set; }
         public string name { get; set; }
         public long place_fk { get; set; }
     
         public virtual place place { get; set; }
+        public virtual ICollection<match> match { get; set; }
     }
 }

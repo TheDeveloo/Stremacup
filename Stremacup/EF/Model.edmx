@@ -38,6 +38,7 @@
           <Property Name="datetime" Type="datetime" />
           <Property Name="team1_fk" Type="integer" Nullable="false" />
           <Property Name="team2_fk" Type="integer" Nullable="false" />
+          <Property Name="field_fk" Type="integer" />
         </EntityType>
         <EntityType Name="matchday">
           <Key>
@@ -96,6 +97,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_match_0_0">
+          <End Role="field" Type="Self.field" Multiplicity="0..1" />
+          <End Role="match" Type="Self.match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="field">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="match">
+              <PropertyRef Name="field_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_1_0">
           <End Role="team" Type="Self.team" Multiplicity="1" />
           <End Role="match" Type="Self.match" Multiplicity="*" />
           <ReferentialConstraint>
@@ -107,7 +120,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_match_1_0">
+        <Association Name="FK_match_2_0">
           <End Role="team" Type="Self.team" Multiplicity="1" />
           <End Role="match" Type="Self.match" Multiplicity="*" />
           <ReferentialConstraint>
@@ -173,10 +186,14 @@
             <End Role="group" EntitySet="group" />
           </AssociationSet>
           <AssociationSet Name="FK_match_0_0" Association="Self.FK_match_0_0">
-            <End Role="team" EntitySet="team" />
+            <End Role="field" EntitySet="field" />
             <End Role="match" EntitySet="match" />
           </AssociationSet>
           <AssociationSet Name="FK_match_1_0" Association="Self.FK_match_1_0">
+            <End Role="team" EntitySet="team" />
+            <End Role="match" EntitySet="match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_match_2_0" Association="Self.FK_match_2_0">
             <End Role="team" EntitySet="team" />
             <End Role="match" EntitySet="match" />
           </AssociationSet>
@@ -214,6 +231,7 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="place_fk" Type="Int64" Nullable="false" />
           <NavigationProperty Name="place" Relationship="Self.FK_field_0_0" FromRole="field" ToRole="place" />
+          <NavigationProperty Name="match" Relationship="stremacupModel.FK_match_0_01" FromRole="field" ToRole="match" />
         </EntityType>
         <EntityType Name="group">
           <Key>
@@ -237,6 +255,8 @@
           <Property Name="team2_fk" Type="Int64" Nullable="false" />
           <NavigationProperty Name="team" Relationship="Self.FK_match_0_0" FromRole="match" ToRole="team" />
           <NavigationProperty Name="team1" Relationship="Self.FK_match_1_0" FromRole="match" ToRole="team" />
+          <Property Name="field_fk" Type="Int64" />
+          <NavigationProperty Name="field" Relationship="stremacupModel.FK_match_0_01" FromRole="match" ToRole="field" />
         </EntityType>
         <EntityType Name="matchday">
           <Key>
@@ -386,6 +406,10 @@
             <End Role="category" EntitySet="category" />
             <End Role="team" EntitySet="team" />
           </AssociationSet>
+          <AssociationSet Name="FK_match_0_01" Association="stremacupModel.FK_match_0_01">
+            <End Role="field" EntitySet="field" />
+            <End Role="match" EntitySet="match" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_team_0_01">
           <End Type="stremacupModel.category" Role="category" Multiplicity="1" />
@@ -396,6 +420,18 @@
             </Principal>
             <Dependent Role="team">
               <PropertyRef Name="cat_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_match_0_01">
+          <End Type="stremacupModel.field" Role="field" Multiplicity="0..1" />
+          <End Type="stremacupModel.match" Role="match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="field">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="match">
+              <PropertyRef Name="field_fk" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -434,6 +470,7 @@
           <EntitySetMapping Name="match">
             <EntityTypeMapping TypeName="stremacupModel.match">
               <MappingFragment StoreEntitySet="match">
+                <ScalarProperty Name="field_fk" ColumnName="field_fk" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="score1" ColumnName="score1" />
                 <ScalarProperty Name="score2" ColumnName="score2" />

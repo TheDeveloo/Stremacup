@@ -83,9 +83,10 @@
             <TabItem Header="Génération des horaires">
                 <StackPanel>
                     <Label FontWeight="Bold">Séléction des documents à générer :</Label>
-                    <CheckBox IsChecked="True">Générer horaires par équipe</CheckBox>
-                    <CheckBox IsChecked="True">Générer horaires par terrain</CheckBox>
-                    <CheckBox IsChecked="True">Générer horaires par heure</CheckBox>
+                    <CheckBox x:Name="teamCheckBox" IsChecked="True">Générer horaires par équipe</CheckBox>
+                    <CheckBox x:Name="groupCheckBox" IsChecked="True">Générer horaires par groupe</CheckBox>
+                    <CheckBox x:Name="fieldCheckBox" IsChecked="True">Générer horaires par terrain</CheckBox>
+                    <CheckBox x:Name="categoryCheckBox" IsChecked="True">Générer horaires par catégorie</CheckBox>
                     <Button x:Name="btnGeneratePDF" HorizontalAlignment="Left" Margin="0,20,0,0" Click="btnGeneratePDF_Click">Générer</Button>
                 </StackPanel>
             </TabItem>
