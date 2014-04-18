@@ -110,11 +110,17 @@ namespace Stremacup
             InitializeComponent();
 
             this.em = new stremacupEntities();
+            teamsListView.ItemsSource = em.team.ToList();
         }
 
         public void setRecuperationInfos(string infos)
         {
             recuperationStatus.Text = infos;
+        }
+
+        public void refreshTeamList()
+        {
+            teamsListView.ItemsSource = em.team.ToList();
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -255,33 +261,24 @@ namespace Stremacup
         {
             GenereateMatches gen = new GenereateMatches(this.em);
             gen.roundRobin();
-            /*
-            var doc1 = new Document();
-            PdfWriter.GetInstance(doc1, new FileStream("doc1.pdf", FileMode.Create));
-            doc1.Open();
-            for (int i = 0; i < 1; i++)
-            {
-                Paragraph paragraph = new Paragraph(50f, "My first PDF");
-                paragraph.SpacingAfter = 50f;
-                doc1.Add(paragraph);
-            }
 
-            PdfPTable table = new PdfPTable(3);
-            table.WidthPercentage = 100;
-            PdfPCell cell = new PdfPCell(new Phrase("Header spanning 3 columns"));
-            cell.Colspan = 3;
-            cell.HorizontalAlignment = 1;
-            table.AddCell(cell);
-            table.AddCell("Col 1 Row 1");
-            table.AddCell("Col 2 Row 1");
-            table.AddCell("Col 3 Row 1");
-            table.AddCell("Col 1 Row 2");
-            table.AddCell("Col 2 Row 2");
-            table.AddCell("Col 3 Row 2");
-            doc1.Add(table);
+            GeneratePDF pdfGenerator = new GeneratePDF();
 
-            doc1.Close();
-            */
+            if (categoryCheckBox.IsChecked == true)
+                // Category pdf
+                pdfGenerator.generateForCategories();
+
+            if (groupCheckBox.IsChecked == true)
+                // Group pdf
+                pdfGenerator.generateForGroups();
+
+            if (fieldCheckBox.IsChecked == true)
+                // Field pdf
+                pdfGenerator.generateForFields();
+
+            if (teamCheckBox.IsChecked == true)
+                // Team pdf
+                pdfGenerator.generateForTeams();
         }
     }
 }

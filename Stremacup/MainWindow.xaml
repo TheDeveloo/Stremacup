@@ -6,12 +6,12 @@
         <TabControl>
             <TabItem Header="Récupération des équipes">
                 <StackPanel>
-                    <ListView MinHeight="200" Margin="20">
+                    <ListView x:Name="teamsListView" MinHeight="200" MaxHeight="400" Margin="20">
                         <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Nom" Width="Auto"/>
-                                <GridViewColumn Header="Groupe" Width="Auto"/>
-                            </GridView>
+                                <GridView>
+                                <GridViewColumn Header="Nom" Width="Auto" DisplayMemberBinding="{Binding name}" />
+                                <GridViewColumn Header="Catégorie" Width="Auto" DisplayMemberBinding="{Binding category.name}" />
+                                </GridView>
                         </ListView.View>
                     </ListView>
                         <Button x:Name="btnStart" HorizontalAlignment="Center" Click="btnStart_Click">Récupérer les données</Button>
@@ -64,12 +64,6 @@
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Groupes">
-                            <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-                                <Label>Nombre d'équipes par groupe :</Label>
-                                <TextBox MinWidth="20"></TextBox>
-                            </StackPanel>
-                        </GroupBox>
                         <GroupBox Header="Matchs">
                             <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                 <Label>Durée d'un match (avec pause) :</Label>
@@ -83,9 +77,10 @@
             <TabItem Header="Génération des horaires">
                 <StackPanel>
                     <Label FontWeight="Bold">Séléction des documents à générer :</Label>
-                    <CheckBox IsChecked="True">Générer horaires par équipe</CheckBox>
-                    <CheckBox IsChecked="True">Générer horaires par terrain</CheckBox>
-                    <CheckBox IsChecked="True">Générer horaires par heure</CheckBox>
+                    <CheckBox x:Name="teamCheckBox" IsChecked="True">Générer horaires par équipe</CheckBox>
+                    <CheckBox x:Name="groupCheckBox" IsChecked="True">Générer horaires par groupe</CheckBox>
+                    <CheckBox x:Name="fieldCheckBox" IsChecked="True">Générer horaires par terrain</CheckBox>
+                    <CheckBox x:Name="categoryCheckBox" IsChecked="True">Générer horaires par catégorie</CheckBox>
                     <Button x:Name="btnGeneratePDF" HorizontalAlignment="Left" Margin="0,20,0,0" Click="btnGeneratePDF_Click">Générer</Button>
                 </StackPanel>
             </TabItem>

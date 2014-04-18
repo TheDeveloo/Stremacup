@@ -106,10 +106,6 @@ namespace Stremacup
                             {
                                 em.team.Add(newTeam);
                                 i++;
-                                mainWindow.Dispatcher.BeginInvoke(new Action(() =>
-                                {
-                                    mainWindow.setRecuperationInfos("(" + i + "/" + number + ") " + newTeam.name);
-                                }));
                                 try
                                 {
                                     em.SaveChanges();
@@ -128,6 +124,11 @@ namespace Stremacup
                                         }
                                     }
                                 }
+                                mainWindow.Dispatcher.BeginInvoke(new Action(() =>
+                                {
+                                    mainWindow.setRecuperationInfos("(" + i + "/" + number + ") " + newTeam.name);
+                                    mainWindow.refreshTeamList();
+                                }));
                             }
                             break;
                     }

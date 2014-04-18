@@ -20,8 +20,10 @@ namespace Stremacup.EF
         public Nullable<System.DateTime> datetime { get; set; }
         public long team1_fk { get; set; }
         public long team2_fk { get; set; }
+        public Nullable<long> field_fk { get; set; }
     
         public virtual team team { get; set; }
         public virtual team team1 { get; set; }
+        public virtual field field { get; set; }
     }
 }

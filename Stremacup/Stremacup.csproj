@@ -146,7 +146,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DialogQuestion.xaml.cs" />
+    <Compile Include="DialogQuestion.xaml.cs">
+      <DependentUpon>DialogQuestion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EF\category.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -186,6 +188,7 @@
     <Compile Include="EF\team.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="GeneratePDF.cs" />
     <Compile Include="GenereateMatches.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -211,7 +214,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Content Include="database\stremacup">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EntityDeploy Include="EF\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
