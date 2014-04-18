@@ -175,6 +175,13 @@ namespace Stremacup
 
         public void roundRobin(int matchTime)
         {
+            foreach (match match in em.match)
+                em.match.Remove(match);
+            foreach (group group in em.group)
+                em.group.Remove(group);
+
+            em.SaveChanges();
+
             foreach (category category in em.category)
             {
                 int nbTeamsByGroup = 0;
@@ -227,7 +234,14 @@ namespace Stremacup
                     counter++;
                 }
             }
-            em.SaveChanges();
+            try
+            {
+                em.SaveChanges();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Erreur lors de la sauvegarde des matchs");
+            }
 
             // round robin
             foreach (group group in em.group)

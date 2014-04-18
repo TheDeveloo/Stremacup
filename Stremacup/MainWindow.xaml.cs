@@ -261,29 +261,41 @@ namespace Stremacup
 
         private void btnGeneratePDF_Click(object sender, RoutedEventArgs e)
         {
-            int matchTime = Convert.ToInt32(this.tbxMatchTime.Text);
-            GenereateMatches gen = new GenereateMatches(this.em);
-            gen.roundRobin(matchTime);
+            int matchTime = 0;
+            Boolean error = false;
+            try
+            {
+                matchTime = Convert.ToInt32(this.tbxMatchTime.Text);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Aucune durée pour les matchs\nGénération annulée");
+                error = true;
+            }
 
-            /*
-            GeneratePDF pdfGenerator = new GeneratePDF();
+            if (!error)
+            {
+                GenereateMatches gen = new GenereateMatches(this.em);
+                gen.roundRobin(matchTime);
 
-            if (categoryCheckBox.IsChecked == true)
-                // Category pdf
-                pdfGenerator.generateForCategories();
+                GeneratePDF pdfGenerator = new GeneratePDF();
 
-            if (groupCheckBox.IsChecked == true)
-                // Group pdf
-                pdfGenerator.generateForGroups();
+                if (categoryCheckBox.IsChecked == true)
+                    // Category pdf
+                    pdfGenerator.generateForCategories();
 
-            if (fieldCheckBox.IsChecked == true)
-                // Field pdf
-                pdfGenerator.generateForFields();
+                if (groupCheckBox.IsChecked == true)
+                    // Group pdf
+                    pdfGenerator.generateForGroups();
 
-            if (teamCheckBox.IsChecked == true)
-                // Team pdf
-                pdfGenerator.generateForTeams();
-            */
+                if (fieldCheckBox.IsChecked == true)
+                    // Field pdf
+                    pdfGenerator.generateForFields();
+
+                if (teamCheckBox.IsChecked == true)
+                    // Team pdf
+                    pdfGenerator.generateForTeams();
+            }
         }
 
         private void refreshButton_Click(object sender, RoutedEventArgs e)
