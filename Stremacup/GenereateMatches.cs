@@ -18,101 +18,146 @@ namespace Stremacup
             this.em = stremacupEntities;
         }
 
-        // round robin
-        //public void generateMatchdays(Championship championship) {
-        //    List<MatchDay> matchdayList = new ArrayList<>();
-        //    List<Team> teamList = mainController.getChampionshipTeams(championship);
-        //    String message = "";
+        public void generateMatches(List<team> teams)
+        {
+            if (teams.Count % 2 == 0)
+            {
+                work(teams);
+            }
+            else
+            {
+                teams.Add(null);
+                work(teams);
+            }
+        }
 
-        //    if (teamList.size() % 2 == 0) {
-        //        work(matchdayList, teamList, championship);
-        //    } else {
-        //        teamList.add(new Team(-1, message, null, null));
-        //        message = work(matchdayList, teamList, championship);
-        //    }
+        /* Rotation */
+        void leftRotate(List<team> teams, int d)
+        {
+            int i;
+            for (i = 0; i < d; i++)
+            {
+                leftRotatebyOne(teams);
+            }
+        }
+ 
+        void leftRotatebyOne(List<team> teams)
+        {
+            team temp = null;
+            temp = teams[0];
+            int i = 0;
+            Console.WriteLine("Left rotation " + i);
+            for (i = 0; i < teams.Count - 1; i++)
+            {
+                teams[i] = teams[i + 1];
+            }
+            teams[i] = temp;
+        }
 
-        //    FacesMessage msg = new FacesMessage(message, "INFO MSG");
-        //    msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        //    FacesContext.getCurrentInstance().addMessage(null, msg);
-        //}
+        void rightRotate(List<team> teams, int d)
+        {
+            int i;
+            for (i = 0; i < d; i++)
+            {
+                rightRotatebyOne(teams);
+            }
+        }
+ 
+        void rightRotatebyOne(List<team> teams)
+        {
+            int i = 0;
+            team temp = null;
+            temp = teams[teams.Count - 1];
+            Console.WriteLine("Right rotation " + i);
+            for (i = teams.Count - 1; i > 0; i--)
+            {
+                teams[i] = teams[i - 1];
+            }
+            teams[0] = temp;
+        }
+        /* fin rotation */
 
-        //public String work(List<MatchDay> matchdayList, List<Team> teamList, Championship championship) {
-        //    String message = " | ";
-        //    List<Team> firstList = new ArrayList<>();
-        //    List<Team> reverseList = new ArrayList<>();
+        public void debug(List<team> teams)
+        {
+            foreach (team team in teams)
+            {
+                if (team != null)
+                {
+                    Console.Write(team.id);
+                }
+            }
+            Console.WriteLine();
+        }
 
-        //    for (int k = 1; k < teamList.size(); k++) {
-        //        if (k < teamList.size() / 2) {
-        //            firstList.add(teamList.get(k));
-        //        } else {
-        //            reverseList.add(teamList.get(k));
-        //        }
-        //    }
+        public void work(List<team> teams)
+        {
+            List<team> firstList = new List<team>();
+            List<team> reverseList = new List<team>();
 
-        //    for (int i = 0; i < teamList.size() - 1; i++) {
-        //        MatchDay matchDay = new MatchDay();
-        //        matchDay.setChampionship(championship);
-        //        List<Match> matches = new ArrayList<>();
+            Console.WriteLine(teams.Count);
 
-        //        Collections.rotate(firstList, 1);
-        //        Collections.rotate(reverseList, -1);
-        //        Team temp = firstList.get(0);
-        //        firstList.set(0, reverseList.get(reverseList.size() - 1));
-        //        reverseList.set(reverseList.size() - 1, temp);
+            for (int k = 1; k < teams.Count; k++)
+            {
+                if (k < teams.Count / 2)
+                {
+                    firstList.Add(teams[k]);
+                }
+                else
+                {
+                    reverseList.Add(teams[k]);
+                }
+            }
 
-        //        if (teamList.get(0).getId() != -1 && reverseList.get(0).getId() != -1) {
-        //            Match match1 = new Match();
-        //            match1.setTeam1(teamList.get(0));
-        //            match1.setTeam2(reverseList.get(0));
-        //            match1.setMatchDay(matchDay);
-        //            matches.add(match1);
-        //        }            
+            for (int i = 0; i < teams.Count - 1; i++)
+            {
+                Console.WriteLine("before rotation");
+                debug(firstList);
+                debug(reverseList);
+                Console.WriteLine("after rotation");
+                rightRotate(firstList, 1);
+                leftRotate(reverseList, 1);
+                debug(firstList);
+                debug(reverseList);
 
-        //        if (!("".equals(teamList.get(0).getName())) && !("".equals(reverseList.get(0).getName()))) {
-        //            message += teamList.get(0).getName() + " vs ";
-        //            message += reverseList.get(0).getName();
-        //            message += " | ";
-        //        }
+                // Collections.rotate(firstList, 1);
+                // Collections.rotate(reverseList, -1);
 
-        //        for (int j = 0; j < teamList.size() / 2 - 1; j++) {
-        //            if (firstList.get(j).getId() == -1 || reverseList.get(j + 1).getId() == -1) {
-        //                continue;
-        //            }
-        //            Match match = new Match();
-        //            match.setTeam1(firstList.get(j));
-        //            match.setTeam2(reverseList.get(j + 1));
-        //            match.setMatchDay(matchDay);
+                team temp = firstList[0];
+                firstList[0] = reverseList[reverseList.Count - 1];
+                reverseList[reverseList.Count - 1] = temp;
 
-        //            // match.setMatchDay(matchday);
-        //            matches.add(match);
+                if (teams[0] != null && reverseList[0] != null)
+                {
+                    // créer un nouveau match
+                    match match = new match();
+                    match.team = teams[0];
+                    match.team1 = reverseList[0];
 
-        //            if (!("".equals(firstList.get(j).getName())) && !("".equals(reverseList.get(j + 1).getName()))) {
-        //                message += firstList.get(j).getName() + " vs ";
-        //                message += reverseList.get(j + 1).getName();
-        //                message += " | ";
-        //            }
+                    this.em.match.Add(match);
+                }            
 
-        //        }
+                for (int j = 0; j < teams.Count / 2 - 1; j++)
+                {
+                    if (firstList[j] == null || reverseList[j + 1] == null)
+                    {
+                        continue;
+                    }
 
-        //        // save the matchday
-        //        matchDay.setMatches(matches);
-        //        mainController.persistMatchday(matchDay);
-        //    }
+                    // créer un nouveau match
+                    match match = new match();
+                    match.team = firstList[j];
+                    match.team1 = reverseList[j + 1];
 
-        //    return message;
-        //}
+                    this.em.match.Add(match);
+
+                }
+            }
+
+            this.em.SaveChanges();
+        }
 
         public void roundRobin()
         {
-            /*
-            var dialog = new DialogQuestion();
-
-            if (dialog.ShowDialog() == true)
-            {
-                MessageBox.Show("You said: " + dialog.ResponseText);
-            }
-            */
-
             foreach (category category in em.category)
             {
                 int nbTeamsByGroup = 0;
@@ -161,12 +206,18 @@ namespace Stremacup
                         group.category = category;
                         em.group.Add(group);
                     }
-                    Console.WriteLine(team.name + " " + group.name);
                     group.team.Add(team);
                     counter++;
                 }
             }
             em.SaveChanges();
+
+            // round robin
+            foreach (group group in em.group)
+            {
+                List<team> teams = group.team.ToList();
+                generateMatches(teams);
+            }
         }
     }
 }
