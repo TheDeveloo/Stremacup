@@ -79,7 +79,7 @@
                         <GroupBox Header="Matchs">
                             <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                 <Label>Durée d'un match (avec pause) :</Label>
-                                <TextBox MinWidth="20"></TextBox>
+                                <TextBox x:Name="tbxMatchTime" MinWidth="20"></TextBox>
                                 <Label>Minutes</Label>
                             </StackPanel>
                         </GroupBox>
@@ -100,17 +100,18 @@
 
             <TabItem Header="Insérer scores">
                 <StackPanel>
-                    <DataGrid x:Name="matchsGrid" CanUserAddRows="false" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="400">
+                    <DataGrid x:Name="matchsGrid" CanUserAddRows="false" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="400" MaxHeight="400" SelectedCellsChanged="matchsGrid_SelectedCellsChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Catégorie" Binding="{Binding category.name}" />
-                            <DataGridTextColumn Header="Équipe 1" Binding="{Binding team}" />
-                            <DataGridTextColumn Header="Équipe 2" Binding="{Binding team1}" />
+                            <DataGridTextColumn Header="Catégorie" Binding="{Binding team.category.name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Équipe 1" Binding="{Binding team.name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Équipe 2" Binding="{Binding team1.name}" IsReadOnly="True" />
                             <DataGridTextColumn Header="Score équ. 1" Binding="{Binding score1}" />
                             <DataGridTextColumn Header="Score équ. 2" Binding="{Binding score2}" />
                             <DataGridTextColumn Header="Fair play équ. 1" Binding="{Binding fair_play1}" />
                             <DataGridTextColumn Header="Fair play équ. 2" Binding="{Binding fair_play2}" />
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Button x:Name="refreshButton" Width="80" Height="40" Click="refreshButton_Click" Content="Rafraîchir" />
                 </StackPanel>
             </TabItem>
         </TabControl>

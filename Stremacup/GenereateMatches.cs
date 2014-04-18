@@ -77,6 +77,7 @@ namespace Stremacup
         }
         /* fin rotation */
 
+        /*
         public void debug(List<team> teams)
         {
             foreach (team team in teams)
@@ -88,6 +89,7 @@ namespace Stremacup
             }
             Console.WriteLine();
         }
+        */
 
         public void work(List<team> teams)
         {
@@ -111,13 +113,13 @@ namespace Stremacup
             for (int i = 0; i < teams.Count - 1; i++)
             {
                 Console.WriteLine("before rotation");
-                debug(firstList);
-                debug(reverseList);
+                // debug(firstList);
+                // debug(reverseList);
                 Console.WriteLine("after rotation");
                 rightRotate(firstList, 1);
                 leftRotate(reverseList, 1);
-                debug(firstList);
-                debug(reverseList);
+                // debug(firstList);
+                // debug(reverseList);
 
                 // Collections.rotate(firstList, 1);
                 // Collections.rotate(reverseList, -1);
@@ -156,7 +158,22 @@ namespace Stremacup
             this.em.SaveChanges();
         }
 
-        public void roundRobin()
+        private int searchField(List<List<group>> fieldToGroup, group currentGroup)
+        {
+            for (int i = 0; i < fieldToGroup.Count; i++)
+            {
+                for (int j = 0; j < fieldToGroup[i].Count; j++)
+                {
+                    if (fieldToGroup[i][j].name == currentGroup.name)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public void roundRobin(int matchTime)
         {
             foreach (category category in em.category)
             {
@@ -218,6 +235,149 @@ namespace Stremacup
                 List<team> teams = group.team.ToList();
                 generateMatches(teams);
             }
+
+
+            List<List<group>> fieldToGroup = new List<List<group>>();
+            int nbFields = this.em.field.Count();
+            for (int i = 0; i < nbFields; i++)
+            {
+                fieldToGroup.Add(new List<group>());
+            }
+            int counterGroup = 0;
+            int nbGroups = this.em.group.Count();
+            List<group> groups = this.em.group.ToList();
+            List<field> fields = this.em.field.ToList();
+            int stepAllGroups = 0;
+            while (counterGroup < nbGroups)
+            {
+                foreach (field field in this.em.field)
+                {
+                    fieldToGroup[stepAllGroups].Add(groups[counterGroup]);
+                }
+                stepAllGroups++;
+                if (stepAllGroups >= nbFields) stepAllGroups = 0;
+                counterGroup++;
+            }
+
+            foreach (match match in this.em.match)
+            {
+                group currentGroup = match.team.group;
+
+                int index = searchField(fieldToGroup, currentGroup);
+
+                match.field = fields[index];
+            }
+
+            this.em.SaveChanges();
+
+            // affecter les jours et heures
+            foreach (field field in em.field)
+            {
+                List<matchday> matchdays = this.em.matchday.ToList();
+                List<schedule> matchdaysSchedule = matchdays[0].schedule.ToList();
+                DateTime matchDayDate0 = matchdays[0].date;
+                // DateTime time0 = matchdaysSchedule[0].beginHour;
+                DateTime time0 = new DateTime(matchDayDate0.Year,
+                                              matchDayDate0.Month,
+                                              matchDayDate0.Day,
+                                              matchdaysSchedule[0].beginHour.Hour,
+                                              matchdaysSchedule[0].beginHour.Minute,
+                                              matchdaysSchedule[0].beginHour.Second);
+                // DateTime time1 = matchdaysSchedule[0].endHour;
+                DateTime time1 = new DateTime(matchDayDate0.Year,
+                                              matchDayDate0.Month,
+                                              matchDayDate0.Day,
+                                              matchdaysSchedule[0].endHour.Hour,
+                                              matchdaysSchedule[0].endHour.Minute,
+                                              matchdaysSchedule[0].endHour.Second);
+                int counterMatchday = 1;
+                int counterSchedule = 1;
+
+                DateTime dateTimeCurrent = new DateTime(matchDayDate0.Year,
+                                                        matchDayDate0.Month,
+                                                        matchDayDate0.Day,
+                                                        time0.Hour,
+                                                        time0.Minute,
+                                                        time0.Second);
+
+                foreach (match match in field.match)
+                {
+                    match.datetime = dateTimeCurrent;
+
+                    if (dateTimeCurrent < time1)
+                    {
+                        dateTimeCurrent = dateTimeCurrent.AddMinutes(matchTime);
+                    }
+                    else
+                    {
+                        // changement de jours
+                        if (counterSchedule >= matchdaysSchedule.Count)
+                        {
+                            counterSchedule = 0;
+
+                            matchDayDate0 = matchdays[counterMatchday].date;
+                            matchdaysSchedule = matchdays[counterMatchday].schedule.ToList();
+
+                            // time0 = matchdaysSchedule[counterSchedule].beginHour;
+                            time0 = new DateTime(matchDayDate0.Year,
+                              matchDayDate0.Month,
+                              matchDayDate0.Day,
+                              matchdaysSchedule[counterSchedule].beginHour.Hour,
+                              matchdaysSchedule[counterSchedule].beginHour.Minute,
+                              matchdaysSchedule[counterSchedule].beginHour.Second);
+                            // time1 = matchdaysSchedule[counterSchedule].endHour;
+                            time1 = new DateTime(matchDayDate0.Year,
+                              matchDayDate0.Month,
+                              matchDayDate0.Day,
+                              matchdaysSchedule[counterSchedule].endHour.Hour,
+                              matchdaysSchedule[counterSchedule].endHour.Minute,
+                              matchdaysSchedule[counterSchedule].endHour.Second);
+
+                            dateTimeCurrent = new DateTime(matchDayDate0.Year,
+                                                           matchDayDate0.Month,
+                                                           matchDayDate0.Day,
+                                                           time0.Hour,
+                                                           time0.Minute,
+                                                           time0.Second);
+
+                            counterMatchday++;
+
+                            if (counterMatchday == matchdays.Count)
+                            {
+                                Console.WriteLine("Out date");
+                                this.em.SaveChanges();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            // time0 = matchdaysSchedule[counterSchedule].beginHour;
+                            time0 = new DateTime(matchDayDate0.Year,
+                              matchDayDate0.Month,
+                              matchDayDate0.Day,
+                              matchdaysSchedule[counterSchedule].beginHour.Hour,
+                              matchdaysSchedule[counterSchedule].beginHour.Minute,
+                              matchdaysSchedule[counterSchedule].beginHour.Second);
+                            // time1 = matchdaysSchedule[counterSchedule].endHour;
+                            time1 = new DateTime(matchDayDate0.Year,
+                              matchDayDate0.Month,
+                              matchDayDate0.Day,
+                              matchdaysSchedule[counterSchedule].endHour.Hour,
+                              matchdaysSchedule[counterSchedule].endHour.Minute,
+                              matchdaysSchedule[counterSchedule].endHour.Second);
+
+                            dateTimeCurrent = new DateTime(matchDayDate0.Year,
+                                                           matchDayDate0.Month,
+                                                           matchDayDate0.Day,
+                                                           time0.Hour,
+                                                           time0.Minute,
+                                                           time0.Second);
+                            counterSchedule++;
+                        }
+                    }
+                }
+            }
+            this.em.SaveChanges();
         }
     }
 }
