@@ -218,6 +218,11 @@ namespace Stremacup
                 return;
             }
             place selectedPlace = (place) lbxPlaces.SelectedItem;
+            List<field> fields = selectedPlace.field.ToList();
+            foreach (field f in fields)
+            {
+                em.field.Remove(f);
+            }
             em.place.Remove(selectedPlace);
             lbxPlaces.Items.RemoveAt(lbxPlaces.SelectedIndex);
 
