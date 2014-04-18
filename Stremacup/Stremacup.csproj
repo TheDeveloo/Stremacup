@@ -188,6 +188,7 @@
     <Compile Include="EF\team.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="GeneratePDF.cs" />
     <Compile Include="GenereateMatches.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

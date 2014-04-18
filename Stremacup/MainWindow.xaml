@@ -80,6 +80,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
+            
             <TabItem Header="Génération des horaires">
                 <StackPanel>
                     <Label FontWeight="Bold">Séléction des documents à générer :</Label>
@@ -88,6 +89,22 @@
                     <CheckBox x:Name="fieldCheckBox" IsChecked="True">Générer horaires par terrain</CheckBox>
                     <CheckBox x:Name="categoryCheckBox" IsChecked="True">Générer horaires par catégorie</CheckBox>
                     <Button x:Name="btnGeneratePDF" HorizontalAlignment="Left" Margin="0,20,0,0" Click="btnGeneratePDF_Click">Générer</Button>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Insérer scores">
+                <StackPanel>
+                    <DataGrid x:Name="matchsGrid" CanUserAddRows="false" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="400">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Catégorie" Binding="{Binding category.name}" />
+                            <DataGridTextColumn Header="Équipe 1" Binding="{Binding team}" />
+                            <DataGridTextColumn Header="Équipe 2" Binding="{Binding team1}" />
+                            <DataGridTextColumn Header="Score équ. 1" Binding="{Binding score1}" />
+                            <DataGridTextColumn Header="Score équ. 2" Binding="{Binding score2}" />
+                            <DataGridTextColumn Header="Fair play équ. 1" Binding="{Binding fair_play1}" />
+                            <DataGridTextColumn Header="Fair play équ. 2" Binding="{Binding fair_play2}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
             </TabItem>
         </TabControl>
