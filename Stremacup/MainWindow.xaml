@@ -6,12 +6,12 @@
         <TabControl>
             <TabItem Header="Récupération des équipes">
                 <StackPanel>
-                    <ListView MinHeight="200" Margin="20">
+                    <ListView x:Name="teamsListView" MinHeight="200" MaxHeight="400" Margin="20">
                         <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Nom" Width="Auto"/>
-                                <GridViewColumn Header="Groupe" Width="Auto"/>
-                            </GridView>
+                                <GridView>
+                                <GridViewColumn Header="Nom" Width="Auto" DisplayMemberBinding="{Binding name}" />
+                                <GridViewColumn Header="Catégorie" Width="Auto" DisplayMemberBinding="{Binding category.name}" />
+                                </GridView>
                         </ListView.View>
                     </ListView>
                         <Button x:Name="btnStart" HorizontalAlignment="Center" Click="btnStart_Click">Récupérer les données</Button>

@@ -110,11 +110,17 @@ namespace Stremacup
             InitializeComponent();
 
             this.em = new stremacupEntities();
+            teamsListView.ItemsSource = em.team.ToList();
         }
 
         public void setRecuperationInfos(string infos)
         {
             recuperationStatus.Text = infos;
+        }
+
+        public void refreshTeamList()
+        {
+            teamsListView.ItemsSource = em.team.ToList();
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
