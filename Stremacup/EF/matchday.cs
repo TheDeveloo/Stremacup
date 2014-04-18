@@ -23,5 +23,10 @@ namespace Stremacup.EF
         public System.DateTime date { get; set; }
     
         public virtual ICollection<schedule> schedule { get; set; }
+
+        public override string ToString()
+        {
+            return this.date.ToShortDateString();
+        }
     }
 }

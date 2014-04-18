@@ -20,5 +20,16 @@ namespace Stremacup.EF
         public Nullable<long> matchday_fk { get; set; }
     
         public virtual matchday matchday { get; set; }
+
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+ 
+            stringBuilder.Append(String.Format("{0,2:D2}:{1,2:D2}", this.beginHour.Hour, this.beginHour.Minute));
+            stringBuilder.Append(" - ");
+            stringBuilder.Append(String.Format("{0,2:D2}:{1,2:D2}", this.endHour.Hour, this.endHour.Minute));
+
+            return stringBuilder.ToString();
+        }
     }
 }

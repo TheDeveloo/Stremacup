@@ -23,5 +23,20 @@ namespace Stremacup.EF
         public string name { get; set; }
     
         public virtual ICollection<field> field { get; set; }
+
+        public override string ToString()
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("Place name: ");
+            sb.Append(name);
+            sb.Append("[ ");
+            foreach (field field in this.field)
+            {
+                sb.Append(field.name);
+                sb.Append(", ");
+            }
+            sb.Append(" ]");
+            return sb.ToString();
+        }
     }
 }
