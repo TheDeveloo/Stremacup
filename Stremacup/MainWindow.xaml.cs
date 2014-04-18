@@ -111,6 +111,7 @@ namespace Stremacup
 
             this.em = new stremacupEntities();
             teamsListView.ItemsSource = em.team.ToList();
+            matchsGrid.ItemsSource = em.match.ToList();
         }
 
         public void setRecuperationInfos(string infos)
@@ -279,6 +280,16 @@ namespace Stremacup
             if (teamCheckBox.IsChecked == true)
                 // Team pdf
                 pdfGenerator.generateForTeams();
+        }
+
+        private void refreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            matchsGrid.ItemsSource = em.match.ToList();
+        }
+
+        private void matchsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            em.SaveChanges();
         }
     }
 }
