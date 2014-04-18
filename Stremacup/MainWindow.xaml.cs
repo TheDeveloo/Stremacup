@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Threading;
 
 // round robin
     //public void generateMatchdays(Championship championship) {
@@ -119,7 +120,8 @@ namespace Stremacup
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             API api = new API(this);
-            api.getTeamsHTTP();
+            Thread loadThread = new Thread(new ThreadStart(api.getTeamsHTTP));
+            loadThread.Start();
         }
 
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)

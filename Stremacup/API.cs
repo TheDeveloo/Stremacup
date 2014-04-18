@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Windows.Threading;
 
 namespace Stremacup
 {
@@ -20,14 +21,24 @@ namespace Stremacup
             mainWindow = window;
         }
 
-        public async void getTeamsHTTP()
+        public void getTeamsHTTP()
         {
             Encoding utf8 = Encoding.UTF8;
+
+            mainWindow.Dispatcher.BeginInvoke(new Action(() => 
+            {
+                mainWindow.setRecuperationInfos("Connexion à streethockeycup.ch");
+            }));
 
             string address = "http://streethockeycup.ch/index.php/api.xml";
             System.Net.WebClient webclient = new WebClient();
             webclient.Encoding = utf8;
             String content = webclient.DownloadString(address);
+
+            mainWindow.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                mainWindow.setRecuperationInfos("Liste des équipes récupérée");
+            }));
 
             var em = new stremacupEntities();
             team newTeam = new team();
@@ -95,7 +106,10 @@ namespace Stremacup
                             {
                                 em.team.Add(newTeam);
                                 i++;
-                                mainWindow.setRecuperationInfos("(" + i + "/" + number + ") " + newTeam.name);
+                                mainWindow.Dispatcher.BeginInvoke(new Action(() =>
+                                {
+                                    mainWindow.setRecuperationInfos("(" + i + "/" + number + ") " + newTeam.name);
+                                }));
                                 try
                                 {
                                     em.SaveChanges();
