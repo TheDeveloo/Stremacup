@@ -90,9 +90,9 @@
                 <StackPanel>
                     <DataGrid x:Name="matchsGrid" CanUserAddRows="false" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="400" MaxHeight="400" SelectedCellsChanged="matchsGrid_SelectedCellsChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Catégorie" Binding="{Binding team.category.name}" />
-                            <DataGridTextColumn Header="Équipe 1" Binding="{Binding team.name}" />
-                            <DataGridTextColumn Header="Équipe 2" Binding="{Binding team1.name}" />
+                            <DataGridTextColumn Header="Catégorie" Binding="{Binding team.category.name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Équipe 1" Binding="{Binding team.name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Équipe 2" Binding="{Binding team1.name}" IsReadOnly="True" />
                             <DataGridTextColumn Header="Score équ. 1" Binding="{Binding score1}" />
                             <DataGridTextColumn Header="Score équ. 2" Binding="{Binding score2}" />
                             <DataGridTextColumn Header="Fair play équ. 1" Binding="{Binding fair_play1}" />
