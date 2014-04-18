@@ -253,6 +253,9 @@ namespace Stremacup
 
         private void btnGeneratePDF_Click(object sender, RoutedEventArgs e)
         {
+            GenereateMatches gen = new GenereateMatches(this.em);
+            gen.roundRobin();
+            /*
             var doc1 = new Document();
             PdfWriter.GetInstance(doc1, new FileStream("doc1.pdf", FileMode.Create));
             doc1.Open();
@@ -278,6 +281,7 @@ namespace Stremacup
             doc1.Add(table);
 
             doc1.Close();
+            */
         }
     }
 }
