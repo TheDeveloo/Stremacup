@@ -1,0 +1,10 @@
+﻿<Window x:Class="Stremacup.DialogQuestion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DialogQuestion" Height="300" Width="300">
+    <StackPanel>
+        <TextBlock x:Name="lblQuestion" Text="Enter some text" />
+        <TextBox x:Name="ResponseTextBox" />
+        <Button x:Name="btnOk" Content="OK" Click="OKButton_Click" />
+    </StackPanel>
+</Window>
