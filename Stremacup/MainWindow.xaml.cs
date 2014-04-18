@@ -197,7 +197,7 @@ namespace Stremacup
                 endHour = Convert.ToInt32(this.tbxHEnd.Text);
                 endMinute = Convert.ToInt32(this.tbxMEnd.Text);
             }
-            catch (FormatException) { }
+            catch (FormatException) { Console.WriteLine("btnAddSchedule Exception!"); }
 
             if (selectedMatchday != null && startHour != 0 && startMinute != 0 && endHour != 0 && endMinute != 0)
             {
@@ -259,9 +259,11 @@ namespace Stremacup
 
         private void btnGeneratePDF_Click(object sender, RoutedEventArgs e)
         {
+            int matchTime = Convert.ToInt32(this.tbxMatchTime.Text);
             GenereateMatches gen = new GenereateMatches(this.em);
-            gen.roundRobin();
+            gen.roundRobin(matchTime);
 
+            /*
             GeneratePDF pdfGenerator = new GeneratePDF();
 
             if (categoryCheckBox.IsChecked == true)
@@ -279,6 +281,7 @@ namespace Stremacup
             if (teamCheckBox.IsChecked == true)
                 // Team pdf
                 pdfGenerator.generateForTeams();
+            */
         }
     }
 }

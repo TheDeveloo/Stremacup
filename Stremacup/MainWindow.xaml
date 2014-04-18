@@ -67,7 +67,7 @@
                         <GroupBox Header="Matchs">
                             <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                 <Label>Durée d'un match (avec pause) :</Label>
-                                <TextBox MinWidth="20"></TextBox>
+                                <TextBox x:Name="tbxMatchTime" MinWidth="20"></TextBox>
                                 <Label>Minutes</Label>
                             </StackPanel>
                         </GroupBox>
