@@ -81,7 +81,7 @@ namespace Stremacup
                 paragraph.SpacingAfter = 50f;
                 pdfDoc.Add(paragraph);
 
-                PdfPTable table = new PdfPTable(3);
+                PdfPTable table = new PdfPTable(4);
                 table.WidthPercentage = 100;
                 table.AddCell("Heure");
                 table.AddCell("Terrain");
