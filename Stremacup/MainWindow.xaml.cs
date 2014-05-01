@@ -300,12 +300,25 @@ namespace Stremacup
                 place place = new place();
                 place.name = placeName;
 
+                /* This is a workaround */
+                int fieldnum = 0;
+                List<place> places = em.place.ToList();
+                foreach (place p in places)
+                {
+                    fieldnum += p.field.Count;
+                }
+                /* end workaround */
+
                 this.em.place.Add(place);
 
                 for (int i = 0; i < numberOfFields; i++)
                 {
                     field field = new field();
-                    field.name = placeName + "_field_" + i;
+
+                    /*This is next step of workaround*/
+                    //field.name = placeName + "_field_" + i);
+                    field.name = ""+(fieldnum + i + 1);
+                    /* end workaround*/
 
                     field.place = place;
 
