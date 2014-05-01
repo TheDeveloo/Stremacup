@@ -264,7 +264,7 @@ namespace Stremacup
             }
             catch (FormatException) { Console.WriteLine("btnAddSchedule Exception!"); }
 
-            if (selectedMatchday != null && startHour != 0 && startMinute != 0 && endHour != 0 && endMinute != 0)
+            if (selectedMatchday != null)
             {
                 DateTime startDateTime = new DateTime(1, 1, 1, startHour, startMinute, 0);
                 DateTime endDateTime = new DateTime(1, 1, 1, endHour, endMinute, 0);
